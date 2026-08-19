@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adilson Serafim Junior — Community Manager &amp; Criador de Conteúdo</title>
+
+<!-- [SUBSTITUIR: descrição curta para SEO / compartilhamento] -->
+<meta name="description" content="Portfólio de Adilson Serafim Junior — Community Manager e Criador de Conteúdo em São Paulo/SP.">
+<meta name="theme-color" content="#000000">
+<meta property="og:title" content="Adilson Serafim Junior — Community Manager &amp; Criador de Conteúdo">
+<meta property="og:description" content="Portfólio de Adilson Serafim Junior — Community Manager e Criador de Conteúdo em São Paulo/SP.">
+<meta property="og:type" content="website">
+<!-- [SUBSTITUIR: imagem de compartilhamento 1200x630 em assets/og.jpg] -->
+<meta property="og:image" content="assets/og.jpg">
+
+<!-- Google Fonts: Anton (títulos gigantes) + Inter (texto corrido).
+     Única dependência externa do projeto. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Pular para o conteúdo (acessibilidade / teclado) -->
+<a class="skip-link" href="#work">Pular para o trabalho</a>
+
+<!-- Cursor customizado (só aparece no desktop, via CSS) -->
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<!-- ============================================================
+     MENU FIXO
+     ============================================================ -->
+<header class="nav" id="nav">
+  <a class="nav__marca" href="#top" aria-label="Adilson Serafim — início">
+    <span class="nav__marca-nome">ADILSON SERAFIM</span>
+    <span class="nav__marca-ponto" aria-hidden="true"></span>
+  </a>
+  <nav class="nav__links" aria-label="Navegação principal">
+    <a href="#work">Work</a>
+    <a href="#marcas">Marcas</a>
+    <a href="#numeros">Números</a>
+    <a href="#contato">Contato</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============================================================
+       1. HERO — SHOWREEL
+       ASSET: assets/videos/showreel.mp4 (adicionar o arquivo depois).
+       Sem o arquivo, o fundo preto + nome funcionam como fallback.
+       ============================================================ -->
+  <section class="hero" id="hero">
+    <video
+      class="hero__video"
+      id="showreel"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster=""
+      aria-label="Showreel de Adilson Serafim">
+      <!-- [SUBSTITUIR: colocar o arquivo showreel.mp4 em assets/videos/] -->
+      <source src="assets/videos/showreel.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero__veu" aria-hidden="true"></div>
+
+    <div class="hero__conteudo">
+      <h1 class="hero__nome">
+        <span class="linha">ADILSON</span>
+        <span class="linha">SERAFIM</span>
+      </h1>
+      <p class="hero__sub">Community Manager &amp; Criador de Conteúdo</p>
+      <p class="hero__local">São Paulo / SP</p>
+    </div>
+
+    <!-- Botão de som: só faz sentido se o vídeo existir; o JS esconde se não houver. -->
+    <button class="som" id="som" type="button" aria-pressed="false" aria-label="Ativar som do showreel" hidden>
+      <svg class="som__icone som__icone--mudo" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+        <path d="M4 9h4l5-4v14l-5-4H4V9z" fill="currentColor"/>
+        <path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+      <svg class="som__icone som__icone--ligado" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+        <path d="M4 9h4l5-4v14l-5-4H4V9z" fill="currentColor"/>
+        <path d="M16.5 9.2a4 4 0 0 1 0 5.6M19 6.8a7.5 7.5 0 0 1 0 10.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+      <span class="som__texto">Som</span>
+    </button>
+
+    <a class="hero__scroll" href="#work">
+      <span>Work</span>
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+        <path d="M12 4v15M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </section>
+
+  <!-- ============================================================
+       2. WORK — LISTA DE CASES
+       Desktop: hover mostra a imagem seguindo o cursor.
+       Mobile: toque expande o item (accordion) com imagem + descrição.
+       ASSETS: assets/cases/case_<slug>.webp — se o arquivo não existir,
+       aparece um placeholder cinza com o nome do case.
+       ============================================================ -->
+  <section class="secao work" id="work">
+    <header class="secao__cabecalho reveal">
+      <h2 class="secao__titulo">Work</h2>
+      <p class="secao__nota">Dez experiências. Nenhuma inventada.</p>
+    </header>
+
+    <!-- Preview que segue o cursor (desktop). Preenchido pelo JS. -->
+    <div class="work__preview" id="work-preview" aria-hidden="true">
+      <div class="work__preview-fallback"><span></span></div>
+      <img alt="" decoding="async">
+    </div>
+
+    <ol class="work__lista" id="work-lista">
+
+      <!-- ITEM 01 — ZMES / LEAPMOTOR -->
+      <li class="work__item reveal" data-slug="zmes-leapmotor" data-nome="ZMES / LEAPMOTOR" data-img="assets/cases/case_zmes.webp">
+        <h3>
+          <button class="work__botao" type="button" aria-expanded="false" aria-controls="painel-zmes-leapmotor" id="botao-zmes-leapmotor">
+            <span class="work__num">01</span>
+            <span class="work__nome">ZMES / LEAPMOTOR</span>
+            <!-- [SUBSTITUIR: cargo e período] -->
+            <span class="work__meta">[SUBSTITUIR: cargo e período]</span>
+            <span class="work__cruz" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="work__painel" id="painel-zmes-leapmotor" role="region" aria-labelledby="botao-zmes-leapmotor" hidden>
+          <div class="work__painel-interno">
+            <figure class="work__figura">
+              <div class="work__placeholder"><span>ZMES / LEAPMOTOR</span></div>
+              <!-- ASSET: assets/cases/case_zmes.webp -->
+              <img src="assets/cases/case_zmes.webp" alt="[SUBSTITUIR: descrição da imagem do case ZMES / Leapmotor]" loading="lazy" decoding="async" width="1200" height="800">
+            </figure>
+            <div class="work__texto">
+              <!-- [SUBSTITUIR: 2 a 3 linhas de descrição do trabalho neste case] -->
+              <p>[SUBSTITUIR: 2–3 linhas descrevendo o que você fez na ZMES / Leapmotor — canais geridos, tipo de conteúdo, resultado real.]</p>
+              <!-- Embed opcional de YouTube: troque o valor por um ID real (ex.: data-youtube="dQw4w9WgXcQ") -->
+              <div class="work__video" data-youtube="[SUBSTITUIR: ID do vídeo do YouTube]"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ITEM 02 — LIVE -->
+      <li class="work__item reveal" data-slug="live" data-nome="LIVE (ℓiⱴε)" data-img="assets/cases/case_live.webp">
+        <h3>
+          <button class="work__botao" type="button" aria-expanded="false" aria-controls="painel-live" id="botao-live">
+            <span class="work__num">02</span>
+            <span class="work__nome">LIVE <span class="work__nome-alt">(ℓiⱴε)</span></span>
+            <!-- [SUBSTITUIR: cargo e período] -->
+            <span class="work__meta">[SUBSTITUIR: cargo e período]</span>
+            <span class="work__cruz" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="work__painel" id="painel-live" role="region" aria-labelledby="botao-live" hidden>
+          <div class="work__painel-interno">
+            <figure class="work__figura">
+              <div class="work__placeholder"><span>LIVE</span></div>
+              <!-- ASSET: assets/cases/case_live.webp -->
+              <img src="assets/cases/case_live.webp" alt="[SUBSTITUIR: descrição da imagem do case LIVE]" loading="lazy" decoding="async" width="1200" height="800">
+            </figure>
+            <div class="work__texto">
+              <!-- [SUBSTITUIR: 2 a 3 linhas de descrição] -->
+              <p>[SUBSTITUIR: 2–3 linhas descrevendo o trabalho na LIVE.]</p>
+              <div class="work__video" data-youtube="[SUBSTITUIR: ID do vídeo do YouTube]"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ITEM 03 — INNOVA / AATB -->
+      <li class="work__item reveal" data-slug="innova-aatb" data-nome="INNOVA / AATB" data-img="assets/cases/case_innova.webp">
+        <h3>
+          <button class="work__botao" type="button" aria-expanded="false" aria-controls="painel-innova-aatb" id="botao-innova-aatb">
+            <span class="work__num">03</span>
+            <span class="work__nome">INNOVA / AATB</span>
+            <!-- [SUBSTITUIR: cargo e período] -->
+            <span class="work__meta">[SUBSTITUIR: cargo e período]</span>
+            <span class="work__cruz" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="work__painel" id="painel-innova-aatb" role="region" aria-labelledby="botao-innova-aatb" hidden>
+          <div class="work__painel-interno">
+            <figure class="work__figura">
+              <div class="work__placeholder"><span>INNOVA / AATB</span></div>
+              <!-- ASSET: assets/cases/case_innova.webp -->
+              <img src="assets/cases/case_innova.webp" alt="[SUBSTITUIR: descrição da imagem do case Innova / AATB]" loading="lazy" decoding="async" width="1200" height="800">
+            </figure>
+            <div class="work__texto">
+              <!-- [SUBSTITUIR: 2 a 3 linhas de descrição] -->
+              <p>[SUBSTITUIR: 2–3 linhas descrevendo o trabalho na Innova / AATB.]</p>
+              <div class="work__video" data-youtube="[SUBSTITUIR: ID do vídeo do YouTube]"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ITEM 04 — VIA VAREJO -->
+      <li class="work__item reveal" data-slug="via-varejo" data-nome="VIA VAREJO" data-img="assets/cases/case_via_varejo.webp">
+        <h3>
+          <button class="work__botao" type="button" aria-expanded="false" aria-controls="painel-via-varejo" id="botao-via-varejo">
+            <span class="work__num">04</span>
+            <span class="work__nome">VIA VAREJO</span>
+            <!-- [SUBSTITUIR: cargo e período] -->
+            <span class="work__meta">[SUBSTITUIR: cargo e período]</span>
+            <span class="work__cruz" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="work__painel" id="painel-via-varejo" role="region" aria-labelledby="botao-via-varejo" hidden>
+          <div class="work__painel-interno">
+            <figure class="work__figura">
+              <div class="work__placeholder"><span>VIA VAREJO</span></div>
+              <!-- ASSET: assets/cases/case_via_varejo.webp -->
+              <img src="assets/cases/case_via_varejo.webp" alt="[SUBSTITUIR: descrição da imagem do case Via Varejo]" loading="lazy" decoding="async" width="1200" height="800">
+            </figure>
+            <div class="work__texto">
+              <!-- [SUBSTITUIR: 2 a 3 linhas de descrição] -->
+              <p>[SUBSTITUIR: 2–3 linhas descrevendo o trabalho na Via Varejo.]</p>
+              <div class="work__video" data-youtube="[SUBSTITUIR: ID do vídeo do YouTube]"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ITEM 05 — WARNER PLAY / EXECUTION -->
+      <li class="work__item reveal" data-slug="warner-play" data-nome="WARNER PLAY / EXECUTION" data-img="assets/cases/case_warner_play.webp">
+        <h3>
+          <button class="work__botao" type="button" aria-expanded="false" aria-controls="painel-warner-play" id="botao-warner-play">
+            <span class="work__num">05</span>
+            <span class="work__nome">WARNER PLAY / EXECUTION</span>
+            <!-- [SUBSTITUIR: cargo e período] -->
+            <span class="work__meta">[SUBSTITUIR: cargo e período]</span>
+            <span class="work__cruz" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="work__painel" id="painel-warner-play" role="region" aria-labelledby="botao-warner-play" hidden>
+          <div class="work__painel-interno">
+            <figure class="work__figura">
+              <div class="work__placeholder"><span>WARNER PLAY / EXECUTION</span></div>
+              <!-- ASSET: assets/cases/case_warner_play.webp -->
+              <img src="assets/cases/case_warner_play.webp" alt="[SUBSTITUIR: descrição da imagem do case Warner Play / Execution]" loading="lazy" decoding="async" width="1200" height="800">
+            </figure>
+            <div class="work__texto">
+              <!-- [SUBSTITUIR: 2 a 3 linhas de descrição] -->
+              <p>[SUBSTITUIR: 2–3 linhas descrevendo o trabalho na Warner Play / Execution.]</p>
+              <div class="work__video" data-youtube="[SUBSTITUIR: ID do vídeo do YouTube]"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ITEM 06 — SUZANO -->
+      <li class="work__item reveal" data-slug="suzano" data-nome="SUZANO" data-img="assets/cases/case_suzano.webp">
+        <h3>
+          <button class="work__botao" type="button" aria-expanded="false" aria-controls="painel-suzano" id="botao-suzano">
+            <span class="work__num">06</span>
+            <span class="work__nome">SUZANO</span>
+            <!-- [SUBSTITUIR: cargo e período] -->
+            <span class="work__meta">[SUBSTITUIR: cargo e período]</span>
+            <span class="work__cruz" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="work__painel" id="painel-suzano" role="region" aria-labelledby="botao-suzano" hidden>
+          <div class="work__painel-interno">
+            <figure class="work__figura">
+              <div class="work__placeholder"><span>SUZANO</span></div>
+              <!-- ASSET: assets/cases/case_suzano.webp -->
+              <img src="assets/cases/case_suzano.webp" alt="[SUBSTITUIR: descrição da imagem do case Suzano]" loading="lazy" decoding="async" width="1200" height="800">
+            </figure>
+            <div class="work__texto">
+              <!-- [SUBSTITUIR: 2 a 3 linhas de descrição] -->
+              <p>[SUBSTITUIR: 2–3 linhas descrevendo o trabalho na Suzano.]</p>
+              <div class="work__video" data-youtube="[SUBSTITUIR: ID do vídeo do YouTube]"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ITEM 07 — MUTATO -->
+      <li class="work__item reveal" data-slug="mutato" data-nome="MUTATO" data-img="assets/cases/case_mutato.webp">
+        <h3>
+          <button class="work__botao" type="button" aria-expanded="false" aria-controls="painel-mutato" id="botao-mutato">
+            <span class="work__num">07</span>
+            <span class="work__nome">MUTATO</span>
+            <!-- [SUBSTITUIR: cargo e período] -->
+            <span class="work__meta">[SUBSTITUIR: cargo e período]</span>
+            <span class="work__cruz" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="work__painel" id="painel-mutato" role="region" aria-labelledby="botao-mutato" hidden>
+          <div class="work__painel-interno">
+            <figure class="work__figura">
+              <div class="work__placeholder"><span>MUTATO</span></div>
+              <!-- ASSET: assets/cases/case_mutato.webp -->
+              <img src="assets/cases/case_mutato.webp" alt="[SUBSTITUIR: descrição da imagem do case Mutato]" loading="lazy" decoding="async" width="1200" height="800">
+            </figure>
+            <div class="work__texto">
+              <!-- [SUBSTITUIR: 2 a 3 linhas de descrição] -->
+              <p>[SUBSTITUIR: 2–3 linhas descrevendo o trabalho na Mutato.]</p>
+              <div class="work__video" data-youtube="[SUBSTITUIR: ID do vídeo do YouTube]"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ITEM 08 — REF+ -->
+      <li class="work__item reveal" data-slug="ref-mais" data-nome="REF+" data-img="assets/cases/case_ref_mais.webp">
+        <h3>
+          <button class="work__botao" type="button" aria-expanded="false" aria-controls="painel-ref-mais" id="botao-ref-mais">
+            <span class="work__num">08</span>
+            <span class="work__nome">REF+</span>
+            <!-- [SUBSTITUIR: cargo e período] -->
+            <span class="work__meta">[SUBSTITUIR: cargo e período]</span>
+            <span class="work__cruz" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="work__painel" id="painel-ref-mais" role="region" aria-labelledby="botao-ref-mais" hidden>
+          <div class="work__painel-interno">
+            <figure class="work__figura">
+              <div class="work__placeholder"><span>REF+</span></div>
+              <!-- ASSET: assets/cases/case_ref_mais.webp -->
+              <img src="assets/cases/case_ref_mais.webp" alt="[SUBSTITUIR: descrição da imagem do case REF+]" loading="lazy" decoding="async" width="1200" height="800">
+            </figure>
+            <div class="work__texto">
+              <!-- [SUBSTITUIR: 2 a 3 linhas de descrição] -->
+              <p>[SUBSTITUIR: 2–3 linhas descrevendo o trabalho na REF+.]</p>
+              <div class="work__video" data-youtube="[SUBSTITUIR: ID do vídeo do YouTube]"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ITEM 09 — GRÃO DE AREIA -->
+      <li class="work__item reveal" data-slug="grao-de-areia" data-nome="GRÃO DE AREIA" data-img="assets/cases/case_grao_de_areia.webp">
+        <h3>
+          <button class="work__botao" type="button" aria-expanded="false" aria-controls="painel-grao-de-areia" id="botao-grao-de-areia">
+            <span class="work__num">09</span>
+            <span class="work__nome">GRÃO DE AREIA</span>
+            <!-- [SUBSTITUIR: cargo e período] -->
+            <span class="work__meta">[SUBSTITUIR: cargo e período]</span>
+            <span class="work__cruz" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="work__painel" id="painel-grao-de-areia" role="region" aria-labelledby="botao-grao-de-areia" hidden>
+          <div class="work__painel-interno">
+            <figure class="work__figura">
+              <div class="work__placeholder"><span>GRÃO DE AREIA</span></div>
+              <!-- ASSET: assets/cases/case_grao_de_areia.webp -->
+              <img src="assets/cases/case_grao_de_areia.webp" alt="[SUBSTITUIR: descrição da imagem do case Grão de Areia]" loading="lazy" decoding="async" width="1200" height="800">
+            </figure>
+            <div class="work__texto">
+              <!-- [SUBSTITUIR: 2 a 3 linhas de descrição] -->
+              <p>[SUBSTITUIR: 2–3 linhas descrevendo o trabalho na Grão de Areia.]</p>
+              <div class="work__video" data-youtube="[SUBSTITUIR: ID do vídeo do YouTube]"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ITEM 10 — INSTITUTO SOCIOAMBIENTAL (ISA) -->
+      <li class="work__item reveal" data-slug="isa" data-nome="INSTITUTO SOCIOAMBIENTAL" data-img="assets/cases/case_isa.webp">
+        <h3>
+          <button class="work__botao" type="button" aria-expanded="false" aria-controls="painel-isa" id="botao-isa">
+            <span class="work__num">10</span>
+            <span class="work__nome">INSTITUTO SOCIOAMBIENTAL <span class="work__nome-alt">(ISA)</span></span>
+            <!-- [SUBSTITUIR: cargo e período] -->
+            <span class="work__meta">[SUBSTITUIR: cargo e período]</span>
+            <span class="work__cruz" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="work__painel" id="painel-isa" role="region" aria-labelledby="botao-isa" hidden>
+          <div class="work__painel-interno">
+            <figure class="work__figura">
+              <div class="work__placeholder"><span>INSTITUTO SOCIOAMBIENTAL</span></div>
+              <!-- ASSET: assets/cases/case_isa.webp -->
+              <img src="assets/cases/case_isa.webp" alt="[SUBSTITUIR: descrição da imagem do case Instituto Socioambiental]" loading="lazy" decoding="async" width="1200" height="800">
+            </figure>
+            <div class="work__texto">
+              <!-- [SUBSTITUIR: 2 a 3 linhas de descrição] -->
+              <p>[SUBSTITUIR: 2–3 linhas descrevendo o trabalho no Instituto Socioambiental (ISA).]</p>
+              <div class="work__video" data-youtube="[SUBSTITUIR: ID do vídeo do YouTube]"></div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <!-- ============================================================
+       3. MARCAS — PAREDE DE LOGOS
+       ASSETS: assets/logos/logo_<slug>.png (preto e branco ou colorido;
+       o CSS aplica grayscale e revela a cor no hover).
+       Para adicionar uma marca nova, duplique um <li> e troque
+       o src, o alt e o texto do placeholder.
+       ============================================================ -->
+  <section class="secao marcas" id="marcas">
+    <header class="secao__cabecalho reveal">
+      <h2 class="secao__titulo">Marcas</h2>
+      <p class="secao__nota">Empresas e marcas com que trabalhei.</p>
+    </header>
+
+    <ul class="marcas__grade">
+      <li class="marcas__item reveal">
+        <div class="marcas__placeholder"><span>ZMES / LEAPMOTOR</span></div>
+        <img src="assets/logos/logo_zmes.png" alt="Logo ZMES / Leapmotor" loading="lazy" decoding="async">
+      </li>
+      <li class="marcas__item reveal">
+        <div class="marcas__placeholder"><span>LIVE</span></div>
+        <img src="assets/logos/logo_live.png" alt="Logo LIVE" loading="lazy" decoding="async">
+      </li>
+      <li class="marcas__item reveal">
+        <div class="marcas__placeholder"><span>INNOVA / AATB</span></div>
+        <img src="assets/logos/logo_innova.png" alt="Logo Innova / AATB" loading="lazy" decoding="async">
+      </li>
+      <li class="marcas__item reveal">
+        <div class="marcas__placeholder"><span>VIA VAREJO</span></div>
+        <img src="assets/logos/logo_via_varejo.png" alt="Logo Via Varejo" loading="lazy" decoding="async">
+      </li>
+      <li class="marcas__item reveal">
+        <div class="marcas__placeholder"><span>WARNER PLAY</span></div>
+        <img src="assets/logos/logo_warner_play.png" alt="Logo Warner Play" loading="lazy" decoding="async">
+      </li>
+      <li class="marcas__item reveal">
+        <div class="marcas__placeholder"><span>SUZANO</span></div>
+        <img src="assets/logos/logo_suzano.png" alt="Logo Suzano" loading="lazy" decoding="async">
+      </li>
+      <li class="marcas__item reveal">
+        <div class="marcas__placeholder"><span>MUTATO</span></div>
+        <img src="assets/logos/logo_mutato.png" alt="Logo Mutato" loading="lazy" decoding="async">
+      </li>
+      <li class="marcas__item reveal">
+        <div class="marcas__placeholder"><span>REF+</span></div>
+        <img src="assets/logos/logo_ref_mais.png" alt="Logo REF+" loading="lazy" decoding="async">
+      </li>
+      <li class="marcas__item reveal">
+        <div class="marcas__placeholder"><span>GRÃO DE AREIA</span></div>
+        <img src="assets/logos/logo_grao_de_areia.png" alt="Logo Grão de Areia" loading="lazy" decoding="async">
+      </li>
+      <li class="marcas__item reveal">
+        <div class="marcas__placeholder"><span>ISA</span></div>
+        <img src="assets/logos/logo_isa.png" alt="Logo Instituto Socioambiental" loading="lazy" decoding="async">
+      </li>
+
+      <!-- [SUBSTITUIR: duplicar o bloco abaixo para cada marca extra atendida] -->
+      <li class="marcas__item marcas__item--vazio reveal">
+        <div class="marcas__placeholder"><span>[SUBSTITUIR: marca]</span></div>
+      </li>
+      <li class="marcas__item marcas__item--vazio reveal">
+        <div class="marcas__placeholder"><span>[SUBSTITUIR: marca]</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============================================================
+       4. NÚMEROS — RESULTADOS REAIS
+       O JS só anima a contagem quando data-valor for um número.
+       Enquanto estiver "[SUBSTITUIR]", o texto aparece como está.
+       Ex. real: data-valor="12" data-sufixo="+"
+       ============================================================ -->
+  <section class="secao numeros" id="numeros">
+    <header class="secao__cabecalho reveal">
+      <h2 class="secao__titulo">Números</h2>
+      <p class="secao__nota">Só o que dá para comprovar.</p>
+    </header>
+
+    <ul class="numeros__faixa">
+      <li class="numeros__item reveal">
+        <span class="numeros__valor" data-valor="[SUBSTITUIR]" data-sufixo="">[SUBSTITUIR]</span>
+        <span class="numeros__rotulo">comunidades geridas</span>
+      </li>
+      <li class="numeros__item reveal">
+        <span class="numeros__valor" data-valor="[SUBSTITUIR]" data-sufixo="+">[SUBSTITUIR]</span>
+        <span class="numeros__rotulo">conteúdos publicados</span>
+      </li>
+      <li class="numeros__item reveal">
+        <span class="numeros__valor" data-valor="[SUBSTITUIR]" data-sufixo="">[SUBSTITUIR]</span>
+        <span class="numeros__rotulo">anos de experiência</span>
+      </li>
+      <li class="numeros__item reveal">
+        <span class="numeros__valor" data-valor="[SUBSTITUIR]" data-sufixo="">[SUBSTITUIR]</span>
+        <!-- [SUBSTITUIR: rótulo deste número] -->
+        <span class="numeros__rotulo">[SUBSTITUIR: rótulo]</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============================================================
+       5. RODAPÉ — CONTATO
+       ============================================================ -->
+  <footer class="rodape" id="contato">
+    <div class="rodape__topo reveal">
+      <h2 class="rodape__titulo">Vamos<br>conversar</h2>
+      <!-- [SUBSTITUIR: e-mail de contato] -->
+      <a class="rodape__email" href="mailto:[SUBSTITUIR: e-mail]">[SUBSTITUIR: e-mail]</a>
+    </div>
+
+    <div class="rodape__grade">
+      <div class="rodape__coluna reveal">
+        <h3 class="rodape__rotulo">Redes</h3>
+        <ul class="rodape__lista">
+          <!-- [SUBSTITUIR: URL do LinkedIn] -->
+          <li><a href="[SUBSTITUIR: URL do LinkedIn]" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <!-- [SUBSTITUIR: URL do Instagram — remover se não usar] -->
+          <li><a href="[SUBSTITUIR: URL do Instagram]" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        </ul>
+      </div>
+
+      <div class="rodape__coluna reveal">
+        <h3 class="rodape__rotulo">Outros portfólios</h3>
+        <ul class="rodape__lista">
+          <!-- [SUBSTITUIR: URL do portfólio pixel art] -->
+          <li><a href="[SUBSTITUIR: URL Versão Arcade]" target="_blank" rel="noopener noreferrer">Versão Arcade</a></li>
+          <!-- [SUBSTITUIR: URL do portfólio em jogo 3D] -->
+          <li><a href="[SUBSTITUIR: URL Versão Jogo 3D]" target="_blank" rel="noopener noreferrer">Versão Jogo 3D</a></li>
+          <!-- [SUBSTITUIR: URL do Adilsonline] -->
+          <li><a href="[SUBSTITUIR: URL Adilsonline]" target="_blank" rel="noopener noreferrer">Adilsonline</a></li>
+        </ul>
+      </div>
+
+      <div class="rodape__coluna reveal">
+        <h3 class="rodape__rotulo">Onde</h3>
+        <p class="rodape__texto">São Paulo / SP<br>Brasil</p>
+      </div>
+    </div>
+
+    <div class="rodape__base reveal">
+      <p class="rodape__assinatura">Feito de verdade, sem case inventado.</p>
+      <p class="rodape__copy">© <span id="ano">2026</span> Adilson Serafim Junior</p>
+    </div>
+  </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
