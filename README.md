@@ -15,6 +15,16 @@ Abra o `index.html` no navegador. É isso.
 
 Arraste a pasta inteira para <https://app.netlify.com/drop>.
 
+## Os dois sites deste repositório
+
+| Pasta | Site | Deploy |
+|---|---|---|
+| raiz (`index.html`) | Portfólio one-page estilo agência | pendente |
+| `site-arcade/` | Portfólio-jogo pixel ("Versão Arcade"), arquivo único e autossuficiente | Vercel — *Root Directory* apontando para `site-arcade` |
+
+Na Vercel, cada site é um projeto separado apontando para uma pasta diferente deste mesmo
+repositório. Todo push nesta branch republica o site sozinho.
+
 ## Estrutura
 
 ```
