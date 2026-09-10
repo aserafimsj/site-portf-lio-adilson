@@ -126,7 +126,11 @@
     position:fixed;bottom:calc(var(--chao) + 8px);right:1rem;z-index:46;
     font-family:'Press Start 2P';font-size:.5rem;color:var(--cinza);
     text-align:right;line-height:1.8;pointer-events:none;
+    transition:opacity .6s ease;
   }
+  /* a dica ensina o controle; depois que a pessoa rola, ela sai de cena
+     e para de passar por cima do texto */
+  .dica-controles.cumprida{opacity:0}
 
   /* ---------- ESTRUTURA (linguagem do PDF) ---------- */
   .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
@@ -1096,6 +1100,19 @@
         }
       }
     };
+  })();
+
+  // ===== A DICA DE CONTROLE SAI DEPOIS DE CUMPRIR O PAPEL =====
+  (function(){
+    var dica = document.querySelector('.dica-controles');
+    if(!dica) return;
+    function sumir(){
+      if(window.scrollY < 260) return;
+      dica.classList.add('cumprida');
+      window.removeEventListener('scroll', sumir);
+    }
+    window.addEventListener('scroll', sumir, {passive:true});
+    sumir();                       // caso a página já abra rolada
   })();
 
   // ===== CLIQUE NA FOTO: o personagem pula e responde =====
