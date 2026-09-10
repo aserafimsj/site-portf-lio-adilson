@@ -451,7 +451,7 @@
 <div id="avatar" aria-hidden="true">
   <span class="fala" id="fala"></span>
   <div class="sombra" id="sombra"></div>
-  <div class="corpo" id="corpo"><img id="sprite-andar" alt="" src="sprites/andar/02.png"></div>
+  <div class="corpo" id="corpo"><img id="sprite-andar" alt="" src="sprites/parado/00.png"></div>
 </div>
 <p class="dica-controles" aria-hidden="true">SCROLL OU ← ↑ ↓ →<br>PARA JOGAR</p>
 
@@ -885,11 +885,14 @@
       var deslocado = 0;                              // distância com sinal, move o chão
       // reações espontâneas quando o leitor para de rolar
       var ESPERA = 3200, ultimoMov = 0, proximaEm = 0, ultimaReacao = -1;
-      var REACOES = ['parado', 'reacao1', 'reacao2'];   // 'andar' fica de fora: é o ciclo base
+      var REACOES = ['reacao2', 'reacao1'];   // aceno e comemoração; 'parado' agora é o repouso
       var chaoEl = document.getElementById('chao');
       var N_ANDAR = 12;                          // sprites/andar/00..11.png
-      var qAtual = -1;
-      function pintar(i){ if(i !== qAtual){ qAtual = i; spr.src = caminho('andar', i); } }
+      var srcAtual = '';
+      function quadroDe(nome, i){
+        var s = caminho(nome, i);
+        if(s !== srcAtual){ srcAtual = s; spr.src = s; }
+      }
 
       function quadro(t){
         var alvo = alvoX();
@@ -902,14 +905,16 @@
           if(dx > 0.2) dir = 1; else if(dx < -0.2) dir = -1;
           percorrido += Math.abs(dx);
           // troca de quadro amarrada à distância: passo bate com a velocidade
-          pintar(Math.floor(percorrido / 6) % N_ANDAR);
-        } else {
-          pintar(2); // parado (quadro de pernas juntas)
+          quadroDe('andar', Math.floor(percorrido / 6) % N_ANDAR);
+        } else if(!anim){
+          // em repouso ele fica de frente, respirando — nunca parado de perfil
+          var s = SPRITES.parado;
+          quadroDe('parado', Math.floor(t / (s.dur / s.n)) % s.n);
         }
         // rolar cancela reação em curso (o "sou eu" segue até o fim)
         if(movendo){
           ultimoMov = t;
-          if(anim && anim.nome !== 'soueu'){ anim = null; pulo = 0; qAtual = -1; }
+          if(anim && anim.nome !== 'soueu'){ anim = null; pulo = 0; }
         } else if(!anim && t - ultimoMov > ESPERA && t > proximaEm){
           var r = Math.floor(Math.random() * REACOES.length);
           if(r === ultimaReacao) r = (r + 1) % REACOES.length;   // não repete a mesma seguida
@@ -921,17 +926,15 @@
         if(anim){
           if(anim.t0 === null) anim.t0 = t;
           var k = (t - anim.t0) / anim.dur;
-          if(k >= 1){ anim = null; pulo = 0; qAtual = -1; }
+          if(k >= 1){ anim = null; pulo = 0; }
           else {
-            var qi = Math.min(anim.n - 1, Math.floor(k * anim.n));
-            var src = caminho(anim.nome, qi);
-            if(spr.getAttribute('src') !== src){ spr.src = src; qAtual = -1; }
+            quadroDe(anim.nome, Math.min(anim.n - 1, Math.floor(k * anim.n)));
             pulo = anim.arco ? Math.sin(k * Math.PI) * anim.arco : 0;
           }
         }
 
         var inclina = Math.max(-6, Math.min(6, dx * 1.1));
-        var respira = movendo ? 0 : Math.sin(t / 520) * 1.2;
+        var respira = 0;   // o sprite 'parado' já respira sozinho
 
         avatar.style.transform = 'translateX(' + curX + 'px)';
         // chão corre ao contrário do passo: dá a sensação de caminhada infinita
@@ -940,7 +943,10 @@
         corpo.style.transform = 'translateY(' + (respira - pulo) + 'px) rotate(' + inclina + 'deg)';
         // o balão acompanha o pulo, senão o personagem sobe por cima dele
         fala.style.transform = 'translateX(-50%) translateY(' + (-pulo) + 'px)';
-        spr.style.transform = 'scaleX(' + dir + ')';
+        // só o ciclo de caminhada é de perfil e pode espelhar. Parado, aceno,
+        // comemoração e "sou eu" são de frente: espelhar viraria o personagem
+        // para o lado errado.
+        spr.style.transform = 'scaleX(' + ((!anim && movendo) ? dir : 1) + ')';
 
         sombra.style.transform = 'translateX(-50%) scaleX(' + (movendo ? 0.85 : 1) + ')';
         sombra.style.opacity = movendo ? 0.45 : 0.6;
