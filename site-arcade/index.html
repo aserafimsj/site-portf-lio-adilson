@@ -532,7 +532,7 @@
 <div id="controle-som">
   <button id="btn-musica" type="button" aria-pressed="false" aria-label="Ligar a trilha sonora"><span class="nota" aria-hidden="true">♪</span><span id="btn-musica-txt">OFF</span></button>
   <label class="volume-rotulo" for="volume">VOL</label>
-  <input id="volume" type="range" min="0" max="100" step="5" value="10" aria-label="Volume da trilha sonora">
+  <input id="volume" type="range" min="0" max="100" step="5" value="100" aria-label="Volume da trilha sonora">
 </div>
 
 <!-- ============ CHÃO + AVATAR ============ -->
@@ -1235,16 +1235,19 @@
     try{ if(localStorage.getItem(GUARDA) === 'off') querSom = false; }catch(e){}
     window.trilhaLigada = false;
 
-    // volume: começa bem baixo (10%) e a escolha do usuário fica guardada
-    var vol = 0.10;
+    // teto de volume: a trilha e som de fundo, nunca passa de 10% do volume do aparelho.
+    // o slider vai de 0 a 100, mas isso e a porcentagem DESSE teto (100 no slider = 0.10 real).
+    var TETO = 0.10;
+    var vol = TETO;
     try{
       var g = localStorage.getItem(GUARDA_VOL);
-      if(g !== null && !isNaN(parseFloat(g))) vol = Math.min(1, Math.max(0, parseFloat(g)));
+      // valores guardados antes do teto (ex.: 0.6) sao rebaixados para o maximo atual
+      if(g !== null && !isNaN(parseFloat(g))) vol = Math.min(TETO, Math.max(0, parseFloat(g)));
     }catch(e){}
     if(faixa){
-      faixa.value = Math.round(vol * 100);
+      faixa.value = Math.round(vol / TETO * 100);
       faixa.addEventListener('input', function(){
-        vol = faixa.value / 100;
+        vol = faixa.value / 100 * TETO;
         audio.volume = vol;
         try{ localStorage.setItem(GUARDA_VOL, String(vol)); }catch(e){}
       });
