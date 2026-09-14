@@ -4,7 +4,7 @@ São duas, para usos diferentes:
 
 | Arquivo | Para quê | Peso |
 |---|---|---|
-| `portfolio-adilson-serafim.pdf` | **Anexar em formulário de vaga.** É o formato que os sites de candidatura aceitam. | ~310 KB |
+| `portfolio-adilson-serafim.pdf` | **Anexar em formulário de vaga.** É o formato que os sites de candidatura aceitam. | ~370 KB |
 | `portfolio-adilson-offline.html` | Apresentar o site completo, com os vídeos, sem internet. | ~40 MB |
 
 ---
@@ -19,11 +19,18 @@ cd site-arcade
 python3 build-pdf.py
 ```
 
-Três páginas A4, com o texto na ordem que importa para quem recruta:
-competências antes da explicação da campanha, em todos os cases.
+Quatro páginas A4 **com a estética do site**: fundo preto, o vermelho e o
+amarelo do arcade, as fases em Press Start 2P, títulos gigantes em Oswald,
+competências em chips amarelos e o personagem em pixel na tela final. A ordem
+é a mesma do online — Quem sou eu, Work, Inventário, Marcas, Placar, Em cena,
+Próxima missão — e dentro de cada case as competências vêm antes da campanha.
 
-O texto é de verdade, selecionável — cerca de 9.300 caracteres que um sistema
-de triagem (ATS) consegue ler. Não é imagem de página. E-mail, telefone,
+O texto é de verdade, selecionável — cerca de 9.600 caracteres que um sistema
+de triagem (ATS) consegue ler. A estética está no fundo e na tipografia, não
+numa imagem de página.
+
+Uma consequência do fundo preto: se alguém imprimir, gasta muita tinta. Para
+tela — que é como quase todo recrutador abre — não muda nada. E-mail, telefone,
 Instagram, LinkedIn, portfólio online e as duas matérias de imprensa são
 links clicáveis.
 
