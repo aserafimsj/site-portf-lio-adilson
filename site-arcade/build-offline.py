@@ -139,17 +139,9 @@ def main():
               "+ (i < 10 ? '0' : '') + i + '.png'; }")
     assert h.count(antigo) == 1, 'nao achei caminho()'
     h = h.replace(antigo,
-        "    function caminho(nome, i){ return window.SPRITES_EMBUTIDOS[nome + '/' + i]; }")
-
-    # a tabela precisa existir antes de qualquer IIFE: a abertura roda primeiro
-    # e tambem consulta ela para montar o personagem
-    marca = '<script>\n  // ===== ABERTURA INTERATIVA ====='
-    assert h.count(marca) == 1, 'nao achei o inicio do script'
-    h = h.replace(marca,
-        '<script>\n  // versao offline: os sprites viram data: URI nesta tabela,\n'
-        '  // consultada tanto pela abertura quanto pelo personagem do site\n'
-        '  window.SPRITES_EMBUTIDOS = {' + ','.join(tabela) + '};\n'
-        + marca[len('<script>\n'):])
+        '    // versao offline: os sprites viram data: URI nesta tabela\n'
+        '    var SPRITES_DATA = {' + ','.join(tabela) + '};\n'
+        "    function caminho(nome, i){ return SPRITES_DATA[nome + '/' + i]; }")
 
     # 5) YouTube: sem internet o iframe nao carrega, entao o clique abre o site
     antigo_yt = "        var f = document.createElement('iframe');"
