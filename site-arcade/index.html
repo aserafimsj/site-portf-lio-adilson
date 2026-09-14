@@ -54,23 +54,135 @@
   }
   a:focus-visible,button:focus-visible{outline:2px solid var(--vermelho);outline-offset:3px}
 
-  /* ---------- ABERTURA EM VÍDEO ---------- */
+  /* ---------- ABERTURA INTERATIVA ---------- */
+  /* Camada anterior ao portfolio. Comeca sobria, quebra, e entrega o
+     personagem do site para a pessoa mexer. Tudo isolado no prefixo #ab-. */
   #abertura{
     position:fixed;inset:0;z-index:100;
-    background:#000;
+    background:var(--preto);
     display:flex;align-items:center;justify-content:center;
-    transition:transform .7s cubic-bezier(.7,0,.3,1);
+    overflow:hidden;
+    transition:opacity .45s ease;
   }
-  #abertura.saindo{transform:translateY(-100%)}
-  #abertura video{width:100%;height:100%;object-fit:contain;display:block}
-  #abertura .botoes{position:absolute;bottom:1.4rem;right:1.4rem;display:flex;gap:.7rem}
+  #abertura.saindo{opacity:0;pointer-events:none}
+  #ab-palco{
+    position:relative;width:100%;height:100%;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:.2rem;padding:1.2rem;
+  }
+
+  /* --- momento 1: so o nome --- */
+  #ab-marca{
+    font-family:'Oswald',sans-serif;font-weight:700;
+    font-size:clamp(2.1rem,7.5vw,4.6rem);
+    text-transform:uppercase;line-height:1;letter-spacing:.005em;
+    color:var(--branco);text-align:center;
+    opacity:0;transform:translateY(14px);
+    transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.3,1);
+  }
+  #ab-marca i{font-style:normal;color:var(--vermelho)}
+  #ab-papel{
+    font-family:'Press Start 2P';font-size:clamp(.42rem,1.5vw,.62rem);
+    color:var(--cinza);letter-spacing:.06em;text-align:center;line-height:1.9;
+    margin-top:.9rem;opacity:0;transition:opacity .7s ease .25s;
+  }
+  #abertura.acordando #ab-marca{opacity:1;transform:none}
+  #abertura.acordando #ab-papel{opacity:1}
+
+  /* --- momento 2: a quebra --- */
+  @keyframes ab-glitch{
+    0%  {transform:none;filter:none}
+    18% {transform:translate3d(-7px,2px,0) scale(1.02);
+         filter:drop-shadow(5px 0 0 var(--vermelho)) drop-shadow(-5px 0 0 #00e5ff)}
+    34% {transform:translate3d(6px,-3px,0) scale(.99);
+         filter:drop-shadow(-7px 0 0 var(--vermelho)) drop-shadow(4px 0 0 #00e5ff)}
+    52% {transform:translate3d(-3px,1px,0) scale(1.06);filter:none}
+    70% {opacity:1;transform:translate3d(2px,0,0) scale(.94)}
+    100%{opacity:0;transform:scale(.7);filter:blur(6px)}
+  }
+  #abertura.virando #ab-marca,#abertura.virando #ab-papel{
+    animation:ab-glitch .62s steps(1,end) forwards;
+  }
+  #ab-flash{
+    position:absolute;inset:0;background:var(--vermelho);
+    opacity:0;pointer-events:none;mix-blend-mode:screen;
+  }
+  @keyframes ab-piscar{0%,100%{opacity:0}40%{opacity:.85}60%{opacity:.1}}
+  #abertura.virando #ab-flash{animation:ab-piscar .3s steps(2,end) .34s}
+
+  /* --- momento 3: o personagem --- */
+  #ab-figura{
+    position:absolute;left:50%;top:50%;
+    translate:-50% -50%;
+    display:flex;flex-direction:column;align-items:center;
+    opacity:0;scale:.55;
+    transition:opacity .4s ease,scale .75s cubic-bezier(.18,1.5,.4,1);
+  }
+  #abertura.brincando #ab-figura{opacity:1;scale:1}
+  #ab-boneco{
+    height:min(66vh,480px);width:auto;display:block;
+    image-rendering:pixelated;image-rendering:crisp-edges;
+    cursor:grab;touch-action:none;
+    filter:drop-shadow(0 22px 26px rgba(0,0,0,.75));
+  }
+  #ab-boneco.pegando{cursor:grabbing}
+  #ab-chao{
+    width:min(34vh,260px);height:14px;margin-top:-6px;
+    background:radial-gradient(ellipse at center,rgba(255,46,53,.32),transparent 70%);
+  }
+
+  /* --- dica discreta e chamada --- */
+  #ab-dica{
+    position:absolute;left:50%;translate:-50%;bottom:clamp(5.4rem,13vh,7.6rem);
+    font-family:'Press Start 2P';font-size:.55rem;color:var(--cinza);
+    letter-spacing:.3em;opacity:0;transition:opacity .6s ease;
+    pointer-events:none;white-space:nowrap;
+  }
+  #ab-dica.vendo{opacity:.85;animation:ab-respira 2.4s ease-in-out infinite}
+  @keyframes ab-respira{0%,100%{opacity:.35}50%{opacity:.9}}
+
+  #abertura .chamada-fim{
+    position:absolute;left:50%;translate:-50%;bottom:clamp(2rem,6vh,3.4rem);
+    opacity:0;transform:translateY(10px);pointer-events:none;
+    transition:opacity .5s ease,transform .5s ease;
+  }
+  #abertura.brincando .chamada-fim{opacity:1;transform:none;pointer-events:auto}
   #abertura button{
     background:var(--preto);border:2px solid var(--vermelho);color:var(--vermelho);
-    font-family:'Press Start 2P';font-size:.65rem;
-    padding:.75rem 1rem;cursor:pointer;
-    box-shadow:4px 4px 0 rgba(255,46,53,.3);
+    font-family:'Press Start 2P';font-size:.72rem;
+    padding:.95rem 1.35rem;cursor:pointer;
+    box-shadow:5px 5px 0 rgba(255,46,53,.3);
+    transition:background .15s,color .15s,transform .15s;
   }
-  #abertura button:hover{background:var(--vermelho);color:var(--branco)}
+  #abertura button:hover,#abertura button:focus-visible{
+    background:var(--vermelho);color:var(--branco);transform:translate(-1px,-1px);
+  }
+  /* o pular fica discreto: precisa estar la, sem disputar atencao.
+     O seletor repete o #abertura so para vencer a regra dos botoes acima. */
+  #abertura #ab-pular{
+    position:absolute;top:1rem;right:1rem;
+    background:none;border:1px solid rgba(255,255,255,.2);color:var(--cinza);
+    font-size:.5rem;letter-spacing:.08em;opacity:.65;
+    padding:.55rem .75rem;box-shadow:none;
+  }
+  #abertura #ab-pular:hover,#abertura #ab-pular:focus-visible{
+    background:none;border-color:var(--vermelho);color:var(--vermelho);
+    opacity:1;transform:none;
+  }
+  @media (max-width:520px){
+    #ab-boneco{height:min(52vh,370px)}
+    #ab-dica{font-size:.46rem;letter-spacing:.24em}
+    #abertura button{font-size:.62rem;padding:.8rem 1.1rem}
+  }
+
+  /* quem pede menos movimento recebe a cena parada, com a entrada pronta */
+  @media (prefers-reduced-motion:reduce){
+    #abertura,#ab-marca,#ab-papel,#ab-figura,#ab-dica,#abertura .chamada-fim{
+      transition:none!important;animation:none!important;
+    }
+    #ab-figura{opacity:1;scale:1}
+    #abertura .chamada-fim{opacity:1;transform:none;pointer-events:auto}
+  }
 
   /* ---------- HUD ---------- */
   #hud{
@@ -467,12 +579,27 @@
 </head>
 <body>
 
-<!-- ============ ABERTURA ============ -->
-<div id="abertura" role="presentation">
-  <video id="video-abertura" autoplay muted playsinline preload="auto" poster="posters/01-video.jpg" src="videos/01-video.mp4"></video>
-  <div class="botoes">
-    <button id="btn-som-abertura" type="button">SOM: OFF</button>
-    <button id="btn-pular" type="button">START ▸</button>
+<!-- ============ ABERTURA INTERATIVA ============ -->
+<div id="abertura" role="dialog" aria-modal="true" aria-label="Abertura do portfólio">
+  <div id="ab-palco">
+    <div id="ab-flash" aria-hidden="true"></div>
+
+    <p id="ab-marca">Adilson Serafim Jr<i>.</i></p>
+    <p id="ab-papel">MARKETING DE INFLUÊNCIA &amp; COMMUNITY</p>
+
+    <div id="ab-figura">
+      <canvas id="ab-boneco" width="214" height="204"
+              aria-label="Personagem do portfólio. Arraste para deformar."
+              role="img"></canvas>
+      <div id="ab-chao" aria-hidden="true"></div>
+    </div>
+
+    <p id="ab-dica">· · ·</p>
+
+    <div class="chamada-fim">
+      <button id="btn-pular" type="button">ENTRAR ▸</button>
+    </div>
+    <button id="ab-pular" type="button">PULAR INTRO</button>
   </div>
 </div>
 
@@ -841,39 +968,247 @@
 </footer>
 
 <script>
-  // ===== ABERTURA EM VÍDEO =====
+  // ===== ABERTURA INTERATIVA =====
+  // Camada anterior ao portfolio, isolada: nao toca em nada do site.
+  // Ideia: comecar sobrio, quebrar a linguagem e entregar o personagem
+  // para a pessoa puxar. A deformacao e feita pixel a pixel num canvas
+  // do tamanho do sprite (146x160) e ampliado pelo CSS, entao continua
+  // barato e continua parecendo pixel art.
   (function(){
-    var abertura = document.getElementById('abertura');
-    var video = document.getElementById('video-abertura');
-    var btnPular = document.getElementById('btn-pular');
-    var btnSom = document.getElementById('btn-som-abertura');
-    var reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var tela = document.getElementById('abertura');
+    if(!tela) return;
+    var palco   = document.getElementById('ab-palco');
+    var cv      = document.getElementById('ab-boneco');
+    var dica    = document.getElementById('ab-dica');
+    var btnEntrar = document.getElementById('btn-pular');
+    var btnPular  = document.getElementById('ab-pular');
+    var ctx = cv.getContext('2d', { willReadFrequently: true });
+
+    var LARG = cv.width, ALT = cv.height;
+    var OFX = 34, OFY = 34;               // folga: o sprite (146x160) fica centrado,
+    var PES = OFY + 160;                  // e sobra margem para a deformacao esticar
+    var MENOS_MOVIMENTO = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var GUARDA = 'portfolio_intro_seen';
+    var jaViu = false;
+    try{ jaViu = localStorage.getItem(GUARDA) === '1'; }catch(e){}
+
+    // ---- olhos: os brancos do sprite, medidos no proprio arquivo
+    var OLHOS = [ {x:OFX+64, y:OFY+45, l:2, a:6}, {x:OFX+89, y:OFY+45, l:3, a:6} ];
+    var PUPILA = [26, 18, 16];            // marrom escuro, no tom do desenho
+
+    // ---- estado
+    var fase = 'inicial';
+    var quadros = [], base = null, trab = null, saida = null;
+    var pegou = false, ancora = {x:0, y:0}, peso = null;
+    var desl = {x:0, y:0}, vel = {x:0, y:0}, alvo = {x:0, y:0};
+    var olhar = {x:0, y:0}, olharAlvo = {x:0, y:0};
+    var piscarAte = 0, proximoPiscar = 0;
+    var ultimoToque = 0, mexeu = false, laco = 0;
 
     function encerrar(){
-      abertura.classList.add('saindo');
-      try{ video.pause(); }catch(e){}
-      setTimeout(function(){ abertura.remove(); }, 750);
+      if(fase === 'saindo') return;
+      fase = 'saindo';
+      try{ localStorage.setItem(GUARDA, '1'); }catch(e){}
+      cancelAnimationFrame(laco);
+      tela.classList.add('saindo');
       document.body.style.overflow = '';
+      setTimeout(function(){ if(tela.parentNode) tela.remove(); }, 500);
     }
-
-    // acessibilidade: sem autoplay pra quem prefere menos movimento
-    if(reduzMovimento){ abertura.remove(); return; }
-
-    document.body.style.overflow = 'hidden';
+    btnEntrar.addEventListener('click', encerrar);
     btnPular.addEventListener('click', encerrar);
-    video.addEventListener('ended', encerrar);
-
-    // navegadores só permitem autoplay sem som; botão libera o áudio
-    btnSom.addEventListener('click', function(){
-      video.muted = !video.muted;
-      btnSom.textContent = video.muted ? 'SOM: OFF' : 'SOM: ON';
-      if(video.paused) video.play().catch(function(){});
+    document.addEventListener('keydown', function(e){
+      if(fase !== 'saindo' && (e.key === 'Escape' || e.key === 'Enter')) encerrar();
     });
 
-    // se o autoplay for bloqueado, um toque no vídeo dá o play
-    video.play().catch(function(){});
-    video.addEventListener('click', function(){
-      if(video.paused) video.play().catch(function(){});
+    document.body.style.overflow = 'hidden';
+
+    // ---- carrega o ciclo "parado" do proprio site e guarda os pixels
+    var N = 10, prontos = 0;
+    for(var i = 0; i < N; i++) (function(k){
+      var im = new Image();
+      im.onload = function(){
+        ctx.clearRect(0, 0, LARG, ALT);
+        ctx.drawImage(im, OFX, OFY);
+        quadros[k] = ctx.getImageData(0, 0, LARG, ALT);
+        if(++prontos === N) comecar();
+      };
+      im.onerror = function(){ if(++prontos === N) comecar(); };
+      // na versao offline os sprites viram data: URI numa tabela global
+      im.src = (window.SPRITES_EMBUTIDOS || {})['parado/' + k]
+            || ('sprites/parado/' + (k < 10 ? '0' : '') + k + '.png');
+    })(i);
+    setTimeout(function(){ if(fase === 'inicial' && !quadros[0]) encerrar(); }, 6000);
+
+    function comecar(){
+      if(!quadros[0]) return encerrar();      // sem sprite nao ha abertura
+      trab  = ctx.createImageData(LARG, ALT);
+      saida = ctx.createImageData(LARG, ALT);
+      pesar(LARG / 2, OFY + 52);              // peso inicial: a cabeca
+
+      if(MENOS_MOVIMENTO){                    // cena parada, entrada pronta
+        fase = 'brincando';
+        tela.classList.add('brincando');
+        desenhar(0);
+        return;
+      }
+      var lento = !jaViu;                     // quem ja viu pula a espera
+      tela.classList.add('acordando');
+      setTimeout(function(){
+        tela.classList.add('virando');
+        fase = 'virando';
+        setTimeout(function(){
+          tela.classList.remove('acordando', 'virando');
+          tela.classList.add('brincando');
+          fase = 'brincando';
+          ultimoToque = performance.now();
+          laco = requestAnimationFrame(animar);
+        }, lento ? 620 : 420);
+      }, lento ? 1500 : 320);
+    }
+
+    // ---- pesos da deformacao
+    // Duas coisas ao mesmo tempo: a influencia cai rapido a partir do ponto
+    // agarrado (por isso puxar a cabeca nao arrasta o corpo inteiro) e os pes
+    // ficam pregados no chao, o que da a sensacao de borracha esticando em vez
+    // de boneco deslizando.
+    function pesar(ax, ay){
+      ancora.x = ax; ancora.y = ay;
+      if(!peso) peso = new Float32Array(LARG * ALT);
+      var sigma = 23, dois = 2 * sigma * sigma, p = 0;
+      for(var y = 0; y < ALT; y++){
+        var pe = Math.min(1, Math.max(0, (PES - y) / 30));   // 0 nos pes
+        for(var x = 0; x < LARG; x++, p++){
+          var dx = x - ax, dy = y - ay;
+          peso[p] = Math.exp(-(dx * dx + dy * dy) / dois) * pe;
+        }
+      }
+    }
+
+    // ---- um quadro: sprite -> pupilas -> deformacao -> tela
+    function desenhar(t){
+      var q = quadros[Math.floor(t / 190) % N] || quadros[0];
+      base = q.data;
+      trab.data.set(base);
+      pintarOlhos(trab.data, t);
+
+      var d = saida.data, s = trab.data;
+      var dx = desl.x, dy = desl.y;
+      if(Math.abs(dx) < 0.05 && Math.abs(dy) < 0.05){
+        d.set(s);                              // em repouso nao ha o que torcer
+      } else {
+        var p = 0;
+        for(var y = 0; y < ALT; y++){
+          for(var x = 0; x < LARG; x++, p++){
+            var w = peso[p];
+            var sx = (x - dx * w + 0.5) | 0, sy = (y - dy * w + 0.5) | 0;
+            var o = p * 4;
+            if(sx < 0 || sy < 0 || sx >= LARG || sy >= ALT){ d[o+3] = 0; continue; }
+            var i2 = (sy * LARG + sx) * 4;
+            d[o]   = s[i2];   d[o+1] = s[i2+1];
+            d[o+2] = s[i2+2]; d[o+3] = s[i2+3];
+          }
+        }
+      }
+      ctx.putImageData(saida, 0, 0);
+    }
+
+    function pintarOlhos(px, t){
+      var fechado = t < piscarAte;
+      for(var e = 0; e < 2; e++){
+        var o = OLHOS[e];
+        if(fechado){                            // piscada: fecha a fenda
+          for(var y = o.y; y < o.y + o.a; y++)
+            for(var x = o.x; x < o.x + o.l; x++) escrever(px, x, y, [92, 58, 40]);
+          continue;
+        }
+        // pupila de 2px anda dentro do branco, seguindo o ponteiro
+        var px0 = o.x + Math.round(olhar.x * (o.l - 2) / 2 + (o.l - 2) / 2);
+        var py0 = o.y + 1 + Math.round(olhar.y * 1.4 + 1.4);
+        for(var yy = 0; yy < 3; yy++)
+          for(var xx = 0; xx < 2; xx++)
+            escrever(px, px0 + xx, py0 + yy, PUPILA);
+      }
+    }
+    function escrever(px, x, y, c){
+      if(x < 0 || y < 0 || x >= LARG || y >= ALT) return;
+      var i = (y * LARG + x) * 4;
+      if(px[i+3] < 40) return;                  // nao pinta fora do desenho
+      px[i] = c[0]; px[i+1] = c[1]; px[i+2] = c[2];
+    }
+
+    // ---- o laco
+    function animar(t){
+      if(fase === 'saindo') return;
+      if(!pegou){                               // volta com mola e ultrapassagem
+        vel.x += (alvo.x - desl.x) * 0.22; vel.y += (alvo.y - desl.y) * 0.22;
+        vel.x *= 0.78; vel.y *= 0.78;
+      } else {
+        vel.x = (alvo.x - desl.x) * 0.5; vel.y = (alvo.y - desl.y) * 0.5;
+      }
+      desl.x += vel.x; desl.y += vel.y;
+
+      olhar.x += (olharAlvo.x - olhar.x) * 0.12;
+      olhar.y += (olharAlvo.y - olhar.y) * 0.12;
+
+      if(t > proximoPiscar){                    // piscada rara, curta
+        piscarAte = t + 110;
+        proximoPiscar = t + 2600 + Math.random() * 4200;
+      }
+      if(!mexeu && t - ultimoToque > 3800) dica.classList.add('vendo');
+
+      desenhar(t);
+      laco = requestAnimationFrame(animar);
+    }
+
+    // ---- ponteiro: olhar, agarrar, puxar, soltar
+    function local(ev){
+      var r = cv.getBoundingClientRect();
+      return { x: (ev.clientX - r.left) / r.width * LARG,
+               y: (ev.clientY - r.top) / r.height * ALT, r: r };
+    }
+    window.addEventListener('pointermove', function(ev){
+      if(fase === 'saindo') return;
+      var r = cv.getBoundingClientRect();
+      var cxp = r.left + r.width / 2, cyp = r.top + r.height * 0.3;
+      var lim = Math.max(240, r.width * 1.6);
+      olharAlvo.x = Math.max(-1, Math.min(1, (ev.clientX - cxp) / lim));
+      olharAlvo.y = Math.max(-1, Math.min(1, (ev.clientY - cyp) / lim));
+      if(pegou){
+        var p = local(ev);
+        var mx = p.x - ancora.x, my = p.y - ancora.y;
+        var d = Math.hypot(mx, my), MAX = 46;   // resistencia: nao estica sem fim
+        if(d > MAX){ var f = MAX / d * (1 + Math.log(d / MAX) * 0.42); mx *= f; my *= f; }
+        alvo.x = mx; alvo.y = my;
+      }
+    }, { passive: true });
+
+    cv.addEventListener('pointerdown', function(ev){
+      if(fase !== 'brincando') return;
+      var p = local(ev);
+      if(p.x < 0 || p.y < 0 || p.x >= LARG || p.y >= ALT) return;
+      var i = ((p.y | 0) * LARG + (p.x | 0)) * 4 + 3;
+      if(!quadros[0] || quadros[0].data[i] < 40) return;   // so no desenho
+      pegou = true; mexeu = true;
+      dica.classList.remove('vendo');
+      cv.classList.add('pegando');
+      cv.setPointerCapture(ev.pointerId);
+      pesar(p.x, p.y);
+      ev.preventDefault();
+    });
+    function soltar(){
+      if(!pegou) return;
+      pegou = false;
+      cv.classList.remove('pegando');
+      alvo.x = 0; alvo.y = 0;
+      vel.x *= 0.55; vel.y *= 0.55;             // um empurrao no retorno
+    }
+    cv.addEventListener('pointerup', soltar);
+    cv.addEventListener('pointercancel', soltar);
+    cv.addEventListener('lostpointercapture', soltar);
+    // um toque simples tambem acorda o personagem, sem arrastar
+    cv.addEventListener('click', function(){
+      if(fase !== 'brincando' || mexeu) return;
+      alvo.y = -16; setTimeout(function(){ alvo.y = 0; }, 130);
     });
   })();
 
