@@ -7,7 +7,17 @@ personagem, moedas, vídeos dos cases, fontes, tudo.
 Serve para apresentar o portfólio numa entrevista sem depender do wi-fi do
 lugar, ou para mandar para alguém que vai abrir depois.
 
-## Como gerar
+## Como baixar
+
+Abra o link abaixo e o navegador baixa o arquivo (não abre na tela — ele está
+marcado para download):
+
+<https://site-portf-lio-adilson.vercel.app/portfolio-adilson-offline.html>
+
+Depois é só dar dois cliques no arquivo baixado. Funciona em qualquer
+computador, com ou sem internet.
+
+## Como gerar de novo
 
 ```bash
 cd site-arcade
@@ -19,7 +29,8 @@ O script precisa de internet só na hora de gerar (para baixar as fontes do
 Google); o arquivo resultante não precisa de mais nada.
 
 Gere de novo sempre que mudar o `index.html`, para a versão offline não ficar
-para trás da versão publicada.
+para trás da versão publicada — e faça commit do arquivo gerado, porque é ele
+que fica disponível no link de download acima.
 
 ## O que entra no arquivo
 
