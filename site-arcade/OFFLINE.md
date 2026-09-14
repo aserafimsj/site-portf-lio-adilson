@@ -5,6 +5,7 @@ São duas, para usos diferentes:
 | Arquivo | Para quê | Peso |
 |---|---|---|
 | `portfolio-adilson-serafim.pdf` | **Anexar em formulário de vaga.** É o formato que os sites de candidatura aceitam. | ~370 KB |
+| `portfolio-adilson-serafim.pptx` | **Apresentar.** Um slide por case, para reunião, entrevista ou envio a quem prefere slides. | ~2,8 MB |
 | `portfolio-adilson-offline.html` | Apresentar o site completo, com os vídeos, sem internet. | ~40 MB |
 
 ---
@@ -36,6 +37,45 @@ links clicáveis.
 
 Link de download, depois que a Vercel republicar:
 <https://site-portf-lio-adilson.vercel.app/portfolio-adilson-serafim.pdf>
+
+---
+
+# PPT para apresentar
+
+Gerado por `ppt/build.sh`, que também lê o conteúdo do `index.html`.
+
+```bash
+cd site-arcade/ppt
+npm install pptxgenjs image-size playwright   # só na primeira vez
+sh build.sh
+```
+
+São 14 slides em 16:9, na mesma identidade do site: capa, Quem sou eu, índice
+do Work, **um slide por case**, Inventário, Marcas, Placar, Em cena e Próxima
+missão.
+
+## Como a identidade sobrevive fora daqui
+
+PowerPoint usa as fontes instaladas na máquina de quem abre, e ninguém tem
+Oswald nem Press Start 2P. Então a tipografia de marca — títulos gigantes,
+etiquetas de fase, números vazados e os chips de competência — entra como
+imagem, renderizada com as fontes de verdade. O resto (parágrafos, listas,
+legendas, contatos) é texto editável em Calibri.
+
+Na prática: o deck abre igual em qualquer computador, e você consegue editar
+os textos. Para mudar um título ou um chip, é preciso rodar o `build.sh` de
+novo depois de alterar o `index.html`.
+
+## Os vídeos
+
+Os quatro vídeos que são arquivos seus entram como quadro do próprio vídeo.
+Os dois que estão no YouTube — Warner/MK11 e VillaMix — ganham uma capa
+desenhada no estilo arcade, porque a miniatura oficial não é um arquivo seu;
+a imagem inteira é clicável e leva ao vídeo. Se quiser trocar por um print da
+miniatura real, é só substituir `ppt/img/yt-warner.png` e `ppt/img/yt-brahma.png`.
+
+Todos os links do deck funcionam: e-mail, telefone, Instagram, LinkedIn,
+portfólio online, os dois vídeos do YouTube e as duas matérias de imprensa.
 
 ---
 
