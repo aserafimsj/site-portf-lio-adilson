@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.portfolio-pdf.tmp.html
+render-pdf.js
