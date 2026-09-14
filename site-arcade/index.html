@@ -1206,15 +1206,19 @@
   </div>
 </div>
 <script>
-  // so marca quando NAO estamos no endereco de producao
+  // So marca quando NAO estamos em producao.
+  // A regra principal e o "-git-": a Vercel monta o endereco de preview de
+  // cada branch como <projeto>-git-<branch>-<conta>.vercel.app, e o endereco
+  // de producao nunca tem esse trecho. A lista abaixo e um segundo travamento,
+  // com os enderecos oficiais conhecidos.
   (function(){
-    var OFICIAL = ['site-portf-lio-adilson.vercel.app'];
+    var OFICIAL = ['site-portf-lio-adilson.vercel.app', 'adilsonserafim.vercel.app'];
     var h = location.hostname;
-    if(OFICIAL.indexOf(h) !== -1) return;         // producao: fica invisivel
-    if(h === 'localhost' || h === '127.0.0.1' || h === '' || location.protocol === 'file:'
-       || h.indexOf('vercel.app') !== -1){
-      document.getElementById('selo-teste').classList.add('visivel');
-    }
+    if(OFICIAL.indexOf(h) !== -1) return;
+    var ehPreview = h.indexOf('-git-') !== -1
+                 || h === 'localhost' || h === '127.0.0.1';
+    // o arquivo offline abre em file:// e nao e teste: fica de fora de proposito
+    if(ehPreview) document.getElementById('selo-teste').classList.add('visivel');
   })();
 </script>
 

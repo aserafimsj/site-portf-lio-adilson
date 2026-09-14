@@ -10,23 +10,15 @@ mesmo repositório, e uma nunca interfere na outra.
 
 ## O endereço de teste
 
-A Vercel cria um endereço próprio para cada branch. O da branch `teste` tem
-esta forma:
-
 ```
-https://site-portf-lio-adilson-git-teste-<sua-conta>.vercel.app
+https://adilsonserafim-git-teste-questha.vercel.app
 ```
 
-O trecho `<sua-conta>` é gerado pela Vercel, então **você precisa copiar o
-endereço uma vez** e me mandar, que eu anoto aqui:
+Esse endereço é fixo. Toda vez que eu mandar algo para a branch `teste`, ele
+atualiza sozinho — e o oficial fica parado.
 
-1. Abra <https://vercel.com/dashboard> e entre no projeto.
-2. Vá em **Deployments**.
-3. Procure o deploy cuja branch é `teste`.
-4. Clique nele e copie o endereço do topo.
-
-Depois disso, o endereço é fixo: toda vez que eu mandar algo para a `teste`,
-ele atualiza sozinho — e o oficial fica parado.
+O projeto na Vercel chama `adilsonserafim`, na conta `questha`. Por isso o
+endereço de teste começa com `adilsonserafim` e não com `site-portf-lio`.
 
 ### Se pedir login para abrir
 
