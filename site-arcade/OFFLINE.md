@@ -1,4 +1,38 @@
-# Versão offline do portfólio
+# Versões do portfólio para levar junto
+
+São duas, para usos diferentes:
+
+| Arquivo | Para quê | Peso |
+|---|---|---|
+| `portfolio-adilson-serafim.pdf` | **Anexar em formulário de vaga.** É o formato que os sites de candidatura aceitam. | ~310 KB |
+| `portfolio-adilson-offline.html` | Apresentar o site completo, com os vídeos, sem internet. | ~40 MB |
+
+---
+
+# PDF para anexar
+
+Gerado por `build-pdf.py`, que lê o conteúdo direto do `index.html` — nada é
+reescrito à mão, então o PDF nunca diverge do site.
+
+```bash
+cd site-arcade
+python3 build-pdf.py
+```
+
+Três páginas A4, com o texto na ordem que importa para quem recruta:
+competências antes da explicação da campanha, em todos os cases.
+
+O texto é de verdade, selecionável — cerca de 9.300 caracteres que um sistema
+de triagem (ATS) consegue ler. Não é imagem de página. E-mail, telefone,
+Instagram, LinkedIn, portfólio online e as duas matérias de imprensa são
+links clicáveis.
+
+Link de download, depois que a Vercel republicar:
+<https://site-portf-lio-adilson.vercel.app/portfolio-adilson-serafim.pdf>
+
+---
+
+# Versão offline do site (arquivo único)
 
 Um único arquivo `.html` que funciona **sem internet nenhuma**. Você abre com
 dois cliques, direto do computador ou de um pen drive, e o site inteiro roda:
