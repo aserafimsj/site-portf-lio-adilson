@@ -1172,5 +1172,51 @@
   })();
 
 </script>
+
+<!-- ============ SELO DE TESTE ============ -->
+<!-- Aparece so fora do endereco oficial. Se este trecho for parar na
+     producao algum dia, ele simplesmente nao se mostra. -->
+<style>
+  #selo-teste{
+    position:fixed;top:calc(41px + 10px);right:10px;z-index:60;
+    display:none;align-items:center;gap:.5rem;
+    background:#141414;border:2px solid #ffd400;
+    padding:.5rem .7rem;max-width:min(78vw,330px);
+  }
+  #selo-teste b{
+    font-family:'Press Start 2P';font-size:.5rem;color:#ffd400;
+    letter-spacing:.06em;line-height:1.6;display:block;
+  }
+  #selo-teste span{
+    display:block;font-size:.66rem;color:var(--cinza);line-height:1.5;margin-top:.25rem;
+  }
+  #selo-teste a{color:#ffd400;text-decoration:underline}
+  #selo-teste.visivel{display:flex}
+  @media (max-width:520px){
+    #selo-teste{max-width:calc(100vw - 20px);padding:.45rem .6rem}
+    #selo-teste b{font-size:.42rem}
+    #selo-teste span{font-size:.6rem}
+  }
+</style>
+<div id="selo-teste" role="status">
+  <div>
+    <b>VERSÃO DE TESTE</b>
+    <span>Rascunho, pode quebrar. O portfólio oficial está em
+      <a href="https://site-portf-lio-adilson.vercel.app/">site-portf-lio-adilson.vercel.app</a>.</span>
+  </div>
+</div>
+<script>
+  // so marca quando NAO estamos no endereco de producao
+  (function(){
+    var OFICIAL = ['site-portf-lio-adilson.vercel.app'];
+    var h = location.hostname;
+    if(OFICIAL.indexOf(h) !== -1) return;         // producao: fica invisivel
+    if(h === 'localhost' || h === '127.0.0.1' || h === '' || location.protocol === 'file:'
+       || h.indexOf('vercel.app') !== -1){
+      document.getElementById('selo-teste').classList.add('visivel');
+    }
+  })();
+</script>
+
 </body>
 </html>
